@@ -41,12 +41,12 @@ class ChoreCalendar:
         self.chores = chores
         self.residents = self.parse_emails(resident_file)
 
-    def read_template(filename):
+    def read_template(self, filename):
         with open(filename, 'r', encoding='utf-8') as template_file:
             template_file_content = template_file.read()
         return Template(template_file_content)
 
-    def send_email():
+    def send_email(self):
         s = smtplib.SMTP(host='127.0.0.1', port=8000)
         s.starttls()
         s.login(HOST_ADDR, HOST_PW)
