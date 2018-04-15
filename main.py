@@ -1,4 +1,3 @@
-
 dict = {}
 import icalendar
 
@@ -27,6 +26,17 @@ class ChoreCalendar:
         self.residents = self.parse(resident_file)
 
 
+
+
+    def parse_emails(self, resident_file):
+        users_emails = {}
+        with open(resident_file) as f:
+            for line in f:
+                line_split_by_comma = line.split(',')
+                name = line_split_by_comma[0].strip()
+                email = line_split_by_comma[1].strip()
+                users_emails[name] = email
+        return users_emails
 
 
     def make_main_cal(self):
