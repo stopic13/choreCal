@@ -1,10 +1,10 @@
 dict = {}
 import icalendar
-
+from datetime import datetime
 # input: my master calendar
 filepath = "Chores 17S.ics"
-g = open(filepath,'rb')
-gcal = icalendar.Calendar.from_ical(g.read())
+#g = open(filepath,'rb')
+#gcal = icalendar.Calendar.from_ical(g.read())
 i = 0
 
 name = ""
@@ -12,19 +12,24 @@ name = ""
 
 
 class Chore:
-    def __init__(self, name, description, frequency, days=None):
+    def __init__(self, name, description, frequency, time_of_day=None, days=None):
         self.name = name
         self.description = description
         self.frequency = frequency
-        self.days = days
+        if time_of_day == None:
+            self.start_date = datetime(2018, 4, 5, 8)
+            print(self.start_date)
+
+
+
 
 dishes = Chore("dishes", "do the dishes", 7)
-
+chores = [dishes]
 
 class ChoreCalendar:
     def __init__(self, chores, resident_file):
-        self.residents = self.parse(resident_file)
-
+        self.chores = chores
+        self.residents = self.parse_emails(resident_file)
 
 
 
@@ -41,15 +46,21 @@ class ChoreCalendar:
 
     def make_main_cal(self):
         cal = icalendar.Calendar()
-
+        chore_freq = {}
         for resident in self.residents:
-            print
-            resident
+            chore_freq[resident] = 0
+
+        for chore in self.chores:
+            print(chore)
+
+
+            #  print (resident)
+
             # 	make a new calendar
 
     def make_individual_cals(self):
         for resident in self.residents:
-            print resident
+            print (resident)
             # 	make a new calendar
             cal = icalendar.Calendar()
 
@@ -75,7 +86,7 @@ class ChoreCalendar:
                             dict[resident] += 1
                         else:
                             dict[resident] = 1
-                        print resident, chore
+                        print (resident, chore)
 
                         cal.add_component(event)
 
@@ -87,4 +98,7 @@ class ChoreCalendar:
 
         g.close()
         for key in dict:
-            print  dict[key], key
+            print (dict[key], key)
+
+cal = ChoreCalendar(chores, "users.csv")
+cal.make_main_cal()
