@@ -1,14 +1,3 @@
-
-def parse(resident_file):
-    users_emails = {}
-    with open(resident_file) as f:
-        for line in f:
-            line_split_by_comma = line.split(',')
-            name = line_split_by_comma[0].strip()
-            email = line_split_by_comma[1].strip()
-            users_emails[name] = email
-    return users_emails
-
 dict = {}
 import icalendar
 
@@ -34,9 +23,17 @@ dishes = Chore("dishes", "do the dishes", 7)
 
 class ChoreCalendar:
     def __init__(self, chores, resident_file):
-        self.residents = parse(resident_file)
+        self.residents = parse_emails(resident_file)
 
-
+    def parse_emails(resident_file):
+        users_emails = {}
+        with open(resident_file) as f:
+            for line in f:
+                line_split_by_comma = line.split(',')
+                name = line_split_by_comma[0].strip()
+                email = line_split_by_comma[1].strip()
+                users_emails[name] = email
+        return users_emails
 
     for resident in residents:
         print resident
