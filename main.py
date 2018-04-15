@@ -5,8 +5,8 @@ from email.mime.text import MIMEText
 
 dict = {}
 import icalendar
-from datetime import datetime
-
+from datetime import datetime, timedelta
+from random import shuffle
 
 HOST_ADDR = "woxman01@gmail.com"
 HOST_PW = "LOL"
@@ -79,7 +79,12 @@ class ChoreCalendar:
             chore_freq[resident] = 0
 
         for chore in self.chores:
-            print(chore)
+            event = icalendar.Event()
+            event['summary'] = "CHORE: " + str(chore.name) + " " + str(chore.description)
+            event['dtstart'] =  datetime(chore.start_date + timedelta()
+
+            #print(chore)
+
 
 
             #  print (resident)
