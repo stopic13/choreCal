@@ -1,4 +1,14 @@
 
+def parse(resident_file):
+    users_emails = {}
+    with open(resident_file) as f:
+        for line in f:
+            line_split_by_comma = line.split(',')
+            name = line_split_by_comma[0].strip()
+            email = line_split_by_comma[1].strip()
+            users_emails[name] = email
+    return users_emails
+
 dict = {}
 import icalendar
 
