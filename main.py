@@ -47,11 +47,13 @@ class ChoreCalendar:
         return Template(template_file_content)
 
     def send_email(self):
-        s = smtplib.SMTP(host='127.0.0.1', port=8000)
+        s = smtplib.SMTP(host='smtp.gmail.com', port=587)
+        s.ehlo()
         s.starttls()
+        s.ehlo()
         s.login(HOST_ADDR, HOST_PW)
-        for name, email in residents:
-            message_template = read_template('message.txt')
+        for name, email in self.residents.items():
+            message_template = self.read_template('message.txt')
             msg = MIMEMultipart()
             message = message_template.substitute(PERSON_NAME=name.title())
             msg['From'] = HOST_ADDR
