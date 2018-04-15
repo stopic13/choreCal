@@ -1,6 +1,16 @@
+import smtplib
+from string import Template
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 dict = {}
 import icalendar
 from datetime import datetime
+
+
+HOST_ADDR = "woxman01@gmail.com"
+HOST_PW = "LOL"
+
 # input: my master calendar
 filepath = "Chores 17S.ics"
 #g = open(filepath,'rb')
@@ -31,7 +41,25 @@ class ChoreCalendar:
         self.chores = chores
         self.residents = self.parse_emails(resident_file)
 
+    def read_template(filename):
+        with open(filename, 'r', encoding='utf-8') as template_file:
+            template_file_content = template_file.read()
+        return Template(template_file_content)
 
+    def send_email():
+        s = smtplib.SMTP(host='127.0.0.1', port=8000)
+        s.starttls()
+        s.login(HOST_ADDR, HOST_PW)
+        for name, email in residents:
+            message_template = read_template('message.txt')
+            msg = MIMEMultipart()
+            message = message_template.substitute(PERSON_NAME=name.title())
+            msg['From'] = HOST_ADDR
+            msg['To'] = email
+            msg['Subject'] = "DAT BUTT HOT"
+            msg.attach(MIMEText(message, 'plain'))
+            s.send_message(msg)
+            del msg
 
     def parse_emails(self, resident_file):
         users_emails = {}
