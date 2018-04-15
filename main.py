@@ -29,7 +29,7 @@ class Chore:
         if time_of_day == None:
             self.start_date = datetime(2018, 4, 5, 8)
             print(self.start_date)
-
+        self.end_date = datetime(2018,4, 29, 8)
 
 
 
@@ -79,9 +79,21 @@ class ChoreCalendar:
             chore_freq[resident] = 0
 
         for chore in self.chores:
-            event = icalendar.Event()
-            event['summary'] = "CHORE: " + str(chore.name) + " " + str(chore.description)
-            event['dtstart'] =  datetime(chore.start_date + timedelta()
+            i = 0
+            total_days = (chore.end_date - chore.start_date).days
+            print(total_days)
+
+            while i < total_days:
+                event = icalendar.Event()
+                event['summary'] = "CHORE: " + str(chore.name) + " " + str(chore.description)
+                event['dtstart'] =  chore.start_date + timedelta(days=i)
+                cal.add_component(event)
+
+                i += 1
+
+        f = open("main_cal.ics", 'wb')
+
+        f.write(cal.to_ical())
 
             #print(chore)
 
