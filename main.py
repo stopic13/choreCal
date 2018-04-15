@@ -20,43 +20,61 @@ i = 0
 
 name = ""
 # for each name
-for resident in residents:
-    print resident
-    # 	make a new calendar
-    cal = icalendar.Calendar()
 
-    #for each event
-    for component in gcal.walk('vevent'):
-        summary = component.get('summary')
-        if ":" in summary:
 
-            chore,name = summary.split(":")
-            chore.strip()
-            name.strip()
+class Chore:
+    def __init__(self, name, description, frequency, days=None):
+        self.name = name
+        self.description = description
+        self.frequency = frequency
+        self.days = days
 
-            #if name in event name
-            if resident in name:
+dishes = Chore("dishes", "do the dishes", 7)
 
-                #add to calendar
-                event = icalendar.Event()
-                event['summary'] = "CHORE: " + str(chore)
-                event['dtstart'] = component.get('dtstart')
 
-                #print resident, name
-                if resident in dict:
-                    dict[resident] += 1
-                else:
-                    dict[resident] = 1
-                print resident, chore
+class ChoreCalendar:
+    def __init__(self, chores, resident_file):
+        self.residents = parse(resident_file)
 
-                cal.add_component(event)
 
-    filename = resident + ".ics"
-    f = open(filename, 'wb')
 
-    f.write(cal.to_ical())
-    f.close()
+    for resident in residents:
+        print resident
+        # 	make a new calendar
+        cal = icalendar.Calendar()
 
-g.close()
-for key in dict:
-    print  dict[key], key
+        #for each event
+        for component in gcal.walk('vevent'):
+            summary = component.get('summary')
+            if ":" in summary:
+
+                chore,name = summary.split(":")
+                chore.strip()
+                name.strip()
+
+                #if name in event name
+                if resident in name:
+
+                    #add to calendar
+                    event = icalendar.Event()
+                    event['summary'] = "CHORE: " + str(chore)
+                    event['dtstart'] = component.get('dtstart')
+
+                    #print resident, name
+                    if resident in dict:
+                        dict[resident] += 1
+                    else:
+                        dict[resident] = 1
+                    print resident, chore
+
+                    cal.add_component(event)
+
+        filename = resident + ".ics"
+        f = open(filename, 'wb')
+
+        f.write(cal.to_ical())
+        f.close()
+
+    g.close()
+    for key in dict:
+        print  dict[key], key
