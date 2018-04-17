@@ -8,7 +8,7 @@ import icalendar
 from datetime import datetime, timedelta
 from random import shuffle
 
-HOST_ADDR = "woxman01@gmail.com"
+HOST_ADDR = "username@gmail.com"
 HOST_PW = "LOL"
 
 # input: my master calendar
