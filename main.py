@@ -58,7 +58,7 @@ class ChoreCalendar:
             message = message_template.substitute(PERSON_NAME=name.title())
             msg['From'] = HOST_ADDR
             msg['To'] = email
-            msg['Subject'] = "DAT BUTT HOT"
+            msg['Subject'] = ""
             msg.attach(MIMEText(message, 'plain'))
             s.send_message(msg)
             del msg
